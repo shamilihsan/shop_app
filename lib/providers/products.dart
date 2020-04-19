@@ -48,4 +48,8 @@ class Products with ChangeNotifier {
     // Notify the listeners in the particular widgets that are listening to it
     notifyListeners();
   }
+
+  Product findById(String id) {
+    return _items.firstWhere((product) => product.id == id);
+  }
 }
