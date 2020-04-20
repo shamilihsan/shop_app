@@ -22,8 +22,9 @@ class ProductsGrid extends StatelessWidget {
           childAspectRatio: 3 / 2,
           crossAxisSpacing: 20,
           mainAxisSpacing: 10),
-      itemBuilder: (context, index) => ChangeNotifierProvider(
-        builder: (c) => products[index],
+      itemBuilder: (context, index) => ChangeNotifierProvider.value(
+        // Value should be used in grids or lists because of the widget being destroyed and reference being empty issue
+        value: products[index],
         child: ProductItem(),
       ),
       itemCount: products.length,
