@@ -7,7 +7,6 @@ class EditProductScreen extends StatefulWidget {
 }
 
 class _EditProductScreenState extends State<EditProductScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,14 +16,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
-          // Recommended to use SingleChildScrollView with a Column
-          child: ListView(
-            children: <Widget>[
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Title'),
-                textInputAction: TextInputAction.next,
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  decoration: InputDecoration(labelText: 'Title'),
+                  textInputAction: TextInputAction.next,
+                ),
+              ],
+            ),
           ),
         ),
       ),
