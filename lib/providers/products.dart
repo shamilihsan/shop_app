@@ -119,7 +119,7 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteProduct(String id) {
+  Future<void> deleteProduct(String id) async {
     final url =
         'https://flutter-tutorial-3856a.firebaseio.com/products/$id.json';
     final existingIndex = _items.indexWhere((prod) => prod.id == id);
@@ -128,15 +128,15 @@ class Products with ChangeNotifier {
     notifyListeners();
 
     // Optimistic Updating
-    http.delete(url).then((response) {
-      if (response.statusCode >= 400) {
-        throw HttpException('Could not delete product.');
-      }
-      existingProduct = null;
-    }).catchError((_) {
+    final response = await http.delete(url);
+    if (response.statusCode >= 400) {
       _items.insert(existingIndex, existingProduct);
       notifyListeners();
-    });
+      throw HttpException('Could not delete product.');
+    }
+    
+    existingProduct = null;
+
     _items.removeWhere((prod) => prod.id == id);
     notifyListeners();
   }
