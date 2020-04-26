@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/providers/products.dart';
 import 'package:shop_app/screens/cart_screens.dart';
 import 'package:shop_app/widgets/app_drawer.dart';
 
@@ -19,6 +20,31 @@ class ProductsOverViewScreen extends StatefulWidget {
 
 class _ProductsOverViewScreenState extends State<ProductsOverViewScreen> {
   var _showOnlyFavourites = false;
+  var _isInit = true;
+
+  @override
+  void initState() {
+    // Provider.of<Products>(context).fetchProducts(); //WONT WORK since the app isnt fully loaded so context is not accessible
+    // Will work with listen:false
+
+    // A hack approach
+    // Future.delayed(Duration.zero).then((_) {
+    //   Provider.of<Products>(context).fetchProducts();
+    // });
+    super.initState();
+  }
+
+//Runs after widget initialization, but before the widget is built for the first time
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      Provider.of<Products>(context).fetchProducts();
+    }
+
+    _isInit = false;
+
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {

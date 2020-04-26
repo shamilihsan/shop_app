@@ -43,6 +43,16 @@ class Products with ChangeNotifier {
     return [..._items];
   }
 
+  Future<void> fetchProducts() async {
+    const url = 'https://flutter-tutorial-3856a.firebaseio.com/products.json';
+    try {
+      final response = await http.get(url);
+      print(json.decode(response.body));
+    } catch (error) {
+      throw (error);
+    }
+  }
+
   Future<void> addProduct(Product product) async {
     const url = 'https://flutter-tutorial-3856a.firebaseio.com/products.json';
     try {
